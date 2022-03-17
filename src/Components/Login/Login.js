@@ -1,4 +1,4 @@
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import './login.css'
 
@@ -7,13 +7,9 @@ const Login = () => {
       const [password, setPassword] = useState("");
       const [user, setUser] = useState(null)
       const [blog, setBlog] = useState([])
-      console.log(blog);
-
-      // const [allblog, setallBlog] = useState([])
-      // console.log(allblog, allblog.length);
 
 
-      const handleSubmit = async e => {
+      const handleSubmit = e => {
             e.preventDefault();
             const user = { username, password };
 
@@ -25,9 +21,7 @@ const Login = () => {
 
       const saveBlog = (e) => {
             e.preventDefault()
-
             localStorage.setItem('userblog', JSON.stringify(blog))
-
       }
 
       useEffect(() => {
@@ -46,6 +40,7 @@ const Login = () => {
             setUsername("");
             setPassword("");
             localStorage.removeItem('user');
+            setBlog([])
       }
 
       // if there's a user show the message below
@@ -53,38 +48,46 @@ const Login = () => {
 
             return (
                   <>
-                        <div className='main-container'>
-                              <div className='area'>
-                                    <div style={{
-                                          backgroundColor: 'lightblue', margin: '20px',
-                                          fontSize: '15px', width: '80%', color: 'red', padding: '15px',
-                                    }}>{`${user?.username} is loggged in`}</div>
 
-                                    <h3>Write Your Blog</h3>
+                        <Grid>
+                              <div className='main-container'>
+                                    <Grid sm={12} md={6} lg={4}>
+                                          <div className='area'>
+                                                <div style={{
+                                                      backgroundColor: 'lightblue', margin: '20px',
+                                                      fontSize: '15px', width: '80%', color: 'red', padding: '15px',
+                                                }}>{`loggged in as <---> ${user?.username}`}</div>
 
-                                    <textarea onBlur={(e) => setBlog(prev => ([...prev, e.target.value]))} style={{ margin: '30px', width: '90%' }} name="" id="" cols="60" rows="10"></textarea>
+                                                <h3>Write Your Blog</h3>
 
-                                    < button className='s-btn' onClick={saveBlog}>Submit</button>
+                                                <textarea onBlur={(e) => setBlog(prev => ([...prev, e.target.value]))} style={{ margin: '30px', width: '90%' }} name="" id="" cols="60" rows="10"></textarea>
 
-                                    < button className='l-btn' onClick={handleLogout}>logout</button>
-                                    <br />
+                                                < button className='s-btn' onClick={saveBlog}>Post</button>
 
-                              </div >
-                              <div>
-                                    {
-                                          blog.map((b, index) => {
-                                                return (
-                                                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                                            <div style={{ margin: '10px', border: '1px solid green', gap: '10px', width: '70%' }}>
-                                                                  <h5>{`Author : ${user?.username}`}</h5>
-                                                                  <p key={index}>{b}</p>
-                                                            </div>
-                                                      </div>
-                                                )
-                                          })
-                                    }
+                                                < button className='l-btn' onClick={handleLogout}>logout</button>
+                                                <br />
+
+                                          </div >
+                                    </Grid>
+                                    <Grid sm={12} md={6} lg={6}>
+                                          <div>
+                                                {
+                                                      blog.map((b, index) => {
+                                                            return (
+                                                                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                                        <div style={{ margin: '10px', border: '1px solid green', gap: '10px', width: '70%' }}>
+                                                                              <h5>{`Author : ${user?.username}`}</h5>
+                                                                              <p key={index}>{b}</p>
+                                                                        </div>
+                                                                  </div>
+                                                            )
+                                                      })
+                                                }
+                                          </div>
+                                    </Grid>
                               </div>
-                        </div>
+                        </Grid>
+
 
                   </>
 
