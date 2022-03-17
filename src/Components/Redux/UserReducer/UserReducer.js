@@ -11,7 +11,10 @@ const userReducer = (state = initialstate, action) => {
                   const user = { username: action.username, password: action.password };
                   localStorage.setItem('user', JSON.stringify(user))
                   const result = JSON.parse(localStorage.getItem('user'))
-                  user(result)
+                  return {
+                        ...state,
+                        user: result
+                  }
             }
             // case 'logout': {
             //       const handleLogout = () => {
